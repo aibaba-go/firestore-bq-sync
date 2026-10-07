@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import sys
 import threading
@@ -8,7 +9,7 @@ from google.cloud import bigquery
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
-# ÅäÖÃÏî
+# é…ç½®é¡¹
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://root:_QSgzb9P7hxAy9vrQFzUyNvmmSWYiMf8SUgDnSvd3OhCDUcr@b03d8326-922f-445c-bd0e-98551c2b5ac3.asia-southeast1.firestore.goog:443/fb-saiflow?loadBalanced=true&tls=true&authMechanism=SCRAM-SHA-256&retryWrites=false")
 DB_NAME = os.getenv("DB_NAME", "fb-saiflow")
 COLLECTION_NAME = os.getenv("COLLECTION_NAME", "runoob")
@@ -18,7 +19,7 @@ DATASET_ID = os.getenv("DATASET_ID", "firestore_dw")
 TABLE_ID = os.getenv("TABLE_ID", "runoob")
 PORT = int(os.getenv("PORT", "8080"))
 
-# ÓÃÓÚÏìÓ¦ Cloud Run ½¡¿µ¼ì²éµÄ¼òÒ× HTTP ´¦ÀíÆ÷
+# ç”¨äºå“åº” Cloud Run å¥åº·æ£€æŸ¥çš„ç®€æ˜“ HTTP å¤„ç†å™¨
 class HealthCheckHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
@@ -27,7 +28,7 @@ class HealthCheckHandler(BaseHTTPRequestHandler):
         self.wfile.write(b"OK")
 
     def log_message(self, format, *args):
-        pass  # ºöÂÔ³£¹æÌ½²âÈÕÖ¾£¬±ÜÃâÈÕÖ¾Ë¢ÆÁ
+        pass  # å¿½ç•¥å¸¸è§„æ¢æµ‹æ—¥å¿—ï¼Œé¿å…æ—¥å¿—åˆ·å±
 
 def start_health_check_server():
     server = HTTPServer(("0.0.0.0", PORT), HealthCheckHandler)
@@ -78,9 +79,9 @@ def run_sync():
         sys.exit(1)
 
 if __name__ == "__main__":
-    # ÔÚÖ÷Ïß³Ì»ò×ÓÏß³ÌÆô¶¯½¡¿µ¼ì²é¶Ë¿Ú¼àÌı
+    # åœ¨ä¸»çº¿ç¨‹æˆ–å­çº¿ç¨‹å¯åŠ¨å¥åº·æ£€æŸ¥ç«¯å£ç›‘å¬
     health_thread = threading.Thread(target=start_health_check_server, daemon=True)
     health_thread.start()
 
-    # ÔËĞĞÍ¬²½Âß¼­
+    # è¿è¡ŒåŒæ­¥é€»è¾‘
     run_sync()
